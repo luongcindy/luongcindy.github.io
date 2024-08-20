@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700&display=swap');
+
+body {
+    background-color: black;
+    color: aliceblue;
+}
+.intro{
+    background-image: linear-gradient(to top, black, rgba(0,0,0,0)), url("/images/good\ city\ photo\ -\ Copy.png");
+    background-position: 0%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.nav-links{
+    list-style-type: none;
+    overflow: hidden;
+}
+.nav-links a{
+    font-family: Inter;
+    font-size: large;
+    text-decoration: none;
+    color: white;
+    display: block;
+    margin: 40px;
+    margin-left: -40px;
+    margin-right: 100px;
+}
+.nav-links li{
+    float: right;
+}
+.welcomemsg {
+    font-family: "Josefin Sans";
+    color: white;
+    font-size: 120px;
+    font-weight: 700;
+    text-align: right;
+    margin-right: 100px;
+    margin-bottom: 75px;
+}
+
+.about-container{
+    background: url("images/grid.png") no-repeat scroll center;
+    padding: 150px;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 20px;
+}
+.about-item{
+    border-radius: 40px;
+    width: 600px;
+}
+
+.abouttitle{
+    font-family: "Lexend Giga", sans-serif;
+    font-size: 60px;
+    width: 250px;
+    margin-top: -85px;
+    margin-left: 280px;
+
+}
+.elevatorpitch{
+    font-family: Inter;
+    font-size: 17px;
+    width: 300px;
+    margin-left: 280px;
+    margin-top: -15px;
+}
+.headshot{
+    padding-left: 10px;
+    padding-top: 5px;
+}
+img{
+    border: 1px solid white;
+}
+.email{
+    font-family: "Lexend Giga";
+    font-size: 18px;
+    font-weight: bold;
+    width:150px;
+    height: 50px;
+    border-radius: 20px;
+}
+.links{
+    font-family: "Lexend Giga";
+    font-size: 18px;
+    font-weight: bold;
+    width:150px;
+    height: 50px;
+    border-radius:20px;
+    margin-left: 280px;
+    cursor:pointer;
+}
+.foot-links{
+    list-style-type: none;
+    overflow: hidden;
+    display: inline-block;
+
+}
+.foot-links a{
+    font-family: Inter;
+    font-size: large;
+    text-decoration: none;
+    color: white;
+    margin: 50px;
+}
+.foot-links li{
+    float: right;
+}
+.footer{
+    background: linear-gradient(to bottom, black, rgba(0,0,0,0)), url(images/good\ city\ photo.png);
+    text-align: center;
+    margin-top: 100px;
+}
+a:link { text-decoration: none; 
+color: black;}
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-left: 280px;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    font-family: Inter;
+    font-size: 15px;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius:20px;
+}
+  .dropdown:hover .dropdown-content {
+    display: block;
+    border-radius:20px;
+
+  }
+  
+  

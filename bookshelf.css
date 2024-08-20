@@ -1,0 +1,32 @@
+body{
+    background-color: black;
+}
+.foot-links{
+    list-style-type: none;
+    overflow: hidden;
+    display: inline-block;
+}
+.foot-links a{
+    font-family: Inter;
+    font-size: large;
+    text-decoration: none;
+    color: white;
+    margin: 0px 40px 0px 40px;
+}
+.foot-links li{
+    float: right;
+}
+.footer{
+    text-align: center;
+}
+.construction{
+    width:500px;
+    color:white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    text-align: center;
+    font-family: Inter;
+    font-size: x-large;
+    font-weight: 600;
+}

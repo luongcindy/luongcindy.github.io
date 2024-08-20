@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin Sans: 900");
+
+body{
+    background: url(images/education\ background.png) no-repeat scroll;
+    background-size: cover;
+}
+.grid1{
+    grid-area: nav;
+}
+.grid2{
+    grid-area: space;
+}
+.grid3{
+    grid-area: image;
+}
+.grid4{
+    grid-area: edu;
+    margin-top: 20px;
+    height: 700px;
+    background-color: rgb(222, 216, 216);
+}
+.grid5{
+    grid-area: footer;
+}
+.grid6{
+    grid-area: space2;
+}
+.grid-container{
+    grid-template-areas:
+    'nav nav nav nav nav nav nav nav nav'
+    'space image edu edu edu edu edu edu space2'
+    'footer footer footer footer footer footer footer footer footer';
+    display: grid;
+    gap: 20px;
+}
+.grid-container > div{
+    padding: 20px;
+}
+.nav-links{
+    list-style-type: none;
+    overflow: hidden;
+}
+.nav-links a{
+    font-family: Inter;
+    font-size: large;
+    font-weight:400 ;
+    text-decoration: none;
+    color: white;
+    display: block;
+    margin-left: -40px;
+    margin-right: 90px;
+}
+.nav-links li{
+    float: right;
+}
+.title{
+    font-size: 80px;
+    color: rgb(222, 216, 216);;
+    font-family: "Josefin Sans";
+    text-align: center;
+}
+.campanile{
+    border: solid #777773 1px;
+    width: 500px;
+    height: 650px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.foot-links{
+    list-style-type: none;
+    overflow: hidden;
+    display: inline-block;
+}
+.foot-links a{
+    font-family: Inter;
+    font-size: large;
+    text-decoration: none;
+    color: white;
+    margin: 0px 40px 0px 40px;
+}
+.foot-links li{
+    float: right;
+}
+.footer{
+    text-align: center;
+}
+.logo{
+    grid-area: logo;
+}
+.degree{
+    grid-area: degree;
+    font-family: "Josefin Sans";
+    margin-bottom: 20px;
+}
+.coursework{
+    grid-area: course;
+    border-top: black solid 2px;
+    font-family: "Josefin Sans";
+}
+.edu-container{
+    grid-template-areas: 
+    'logo degree degree'
+    'course course course';
+    display: grid;
+}
+.gobears{
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.line1{
+    font-size: 24px;
+}
+.line2{
+    font-size: 18px;
+}
+.line3{
+    font-size: 14px;
+}
+.relevancy{
+    font-size: large;
+    font-weight: 600;
+    margin: 30px;
+}
+.cs-classes{
+    font-size: 18px;
+    margin-left: 80px;
+    line-height: 30px;
+}
+.ee-classes{
+    font-size: 18px;
+    margin-left: 80px;
+    line-height: 30px;
+    margin-top: 40px;
+}
+.other-classes{
+    font-size: 18px;
+    margin-left: 80px;
+    line-height: 30px;
+    margin-top: 40px;
+}
