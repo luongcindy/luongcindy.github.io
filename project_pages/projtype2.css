@@ -1,0 +1,64 @@
+@import url(https://fonts.googleapis.com/css2?family=Michroma&display=swap);
+
+body{
+    background-color: whitesmoke;
+}
+.grid-container{
+    grid-template-areas: 
+    'back title title title'
+    'back subtit subtit subtit'
+    'image text text space';
+    display: grid;
+    gap:20px;
+}
+.grid1{
+    grid-area: back;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 30px;
+}
+.grid1 a{
+    color: black;
+    text-decoration: none;
+}
+
+.grid2{
+    grid-area: title;
+    font-family: Michroma;
+    font-size: 100px;
+    text-align: right;
+    margin-right: 40px;
+}
+.grid3{
+    grid-area: subtit;
+    font-family: Inter;
+    font-size: 55px;
+    font-weight: 700;
+    text-align: right;
+    margin-top: -80px;
+    margin-right: 40px;
+}
+.grid4{
+    grid-area: image;
+    margin-top: -80px;
+    margin-left: 30px;
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+}
+.grid5{
+    grid-area: text;
+    font-family: Inter;
+    font-size: 19px;
+    font-weight: 500;
+}
+.grid6{
+    grid-area: space;
+    width: 400px;
+}
+img {
+    border: 1px solid;
+    border-color: black;
+}

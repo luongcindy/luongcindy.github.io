@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S1XT33N</title>
+    <link rel="stylesheet" href="projtype1.css" link>
+    <link rel="icon" href="/images/layout.png">
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid1">
+            <a href="/projects.html">
+                <p><<< Back to
+                    <br/>Projects Page
+                </p>
+            </a>
+        </div>
+        <div class="grid2">
+            S1XT33N
+        </div>
+        <div class="grid3">
+            <p>Voice Controlled Miniature
+                <br/> Vehicle. 
+            </p>
+        </div>
+        <div class="grid4">
+            <img src="/images/IMG_9443.jpg" style="width:400px">
+            <div>
+                <p>Here’s a photo of our completed car! The little penguin was 
+                    <br/>taking it for a test drive :D 
+                </p>
+            </div>
+        </div>
+        <div class="grid5">
+            <p>
+                The goal of this project was to build S1XT33N, a miniature voice-controlled car. This car was to have a pre-specified spoken word set, 
+                with each word acting as an instruction for the car to go left, right, forward, etc. Building the car allowed me to hone some 
+                skills I had previously learned, such as breadboarding, hardware debugging, circuit design, and analysis. The process also taught 
+                me an array of new skills and concepts; such as microcontroller programming, thus letting me use C++ for the first time, and what 
+                the principal component analysis (PCA) algorithm is, and its role in machine learning. 
+            </p>
+            <p>Building the car could be split up into 2 types of tasks: putting together the hardware that made up the physical car, and then coding the software that would enable the intended functionality. </p>
+            <p>
+                Assembling the hardware can be divided into two tasks: putting the car together and building the circuit. Assembling the car was straightforward; it involved screwing the wheels and motors into the car frame and using velcro to attach the batteries, the circuit, and the Arduino Leonardo microcontroller. Building the circuit on the other hand was a bit more complicated because of how many circuit elements needed to be created. These circuit elements included items like a mic board and noise filtration system for picking up the user’s spoken words; a voltage regulator so that our 9V batteries wouldn’t fry our Arduino, which has a 5V limit; motor controllers to switch the motors on and off; and an encoder to measure the number of wheel rotations per second. 
+            </p>
+            <p>The software engineering portion of building the car involved using 50+ voice recordings of our word set being repeated to build a PCA algorithm in C++. This algorithm would project the principal components of the soundwaves recorded from the microphone board into a 3D space. Within that 3D space, there are 4 clusters of points. Each point represents the data from 1 of the recordings, reduced to 1 dimension. The cluster that the soundwave’s PCA point lands closest to is the instruction that the car must follow. 
+            </p>
+        </div>
+        <div class="grid6"></div>
+    </div>
+</body>
+</html>
