@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180 Project 2</title>
+    <link rel="stylesheet" href="projtype1.css" link>
+    <link rel="icon" href="/images/layout.png">
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid1">
+            <a href="/projects.html">
+                <p><<< Back to
+                    <br/>Projects Page
+                </p>
+            </a>
+        </div>
+        <div class="grid2">
+            CS 180 Project 2
+        </div>
+        <div class="grid3">
+            <p>Fun with Filters and Frequencies!
+            </p>
+        </div>
+        <div class="grid4">
+            
+        </div>
+        <div class="grid5">
+            <p><b>Part 1.1: Convolutions from Scratch!</b></p>
+            <p>Below I have provided screenshots of my 2-for-loop and 4-for-loop
+                convolution functions. I have also displayed a series of selfies that have 
+                been put through the convolution functions; convolving with either a custom box filter, and or the Finite
+                difference Dx or Dy filters. For me, the signal.convolve2d() and my 2-for-loop convolution functions
+                had similar runtimes. However, the 4-for-loop function had a significantly longer runtime than both 
+                functions. Like actually had me sitting there for a hAWT minute waiting.
+            </p>
+            <div><img src="/images/project2/part1_1_convolvefuncs.png" style="width:700px"></div>
+            <div><img src="/images/project2/part1_1_convolveselfies.png" style="width:700px"></div>
+
+
+            <p><b>Part 1.2: Finite Difference Operator</b></p>
+            <div><img src="/images/project2/part1_2_cameraman.png" style="width:700px"></div>
+
+            <p><b>Part 1.3: Derivative of Gaussian (DoG) Filter</b></p>
+            <p>The results of the DoG filters have more intense edges than the results of the finite difference filters.</p>
+            <div><img src="/images/project2/part1_3_dogfilters.png" style="width:700px"></div>
+
+            <p><b>Part 2.1: Image "Sharpening"</b></p>
+            <p>Imagine that a blurry image is made up of both high and low frequencies.
+                The low frequencies make up the blurry parts of the image, while the high makes up the sharpened parts. 
+                This part of the project goes about sharpening our images by subtracting a blur mask (which we create by
+                convolving our image with a 2d Gaussian kernel) from the original image. This takes away all of the blurry
+                low frequencies, leaving us a new, unsharp mask. This unsharp mask are our isolated high frequencies. 
+                When this unsharp mask is added to our original blurry image, all of the high frequencies are emphasized, leaving us 
+                with a more clear, sharp image! 
+            </p>
+            <p>Looking at our images, we can observe the sharpening of our original Taj Mahal and cat images, and the high frequency filters
+                that did the sharpening. The waterfall portion is a special case, because it was an already-sharpened image. It underwent a blurring, and re-sharpening with the
+                pictured high frequency filter. The subsequently re-sharpened picture seems to be more sharp than the original, with the lighting contrats more exacperated. 
+            </p>
+            <!--part 2.1 images-->
+            <div><img src="/images/project2/part2_1_tajsharpen.png" style="width:850px"></div>
+            <div><img src="/images/project2/part2_1_catsharpen.png" style="width:850px"></div>
+            <div><img src="/images/project2/part2_1_waterfallsharpen.png" style="width:850px"></div>
+
+            <p><b>Part 2.2: Hybrid Images</b></p>
+            <p>Below, you can see the series of hybrid images created for this part. 
+                First off, we have the hybrid of Derek and dear Nutmeg, and the hybrids series of fourier transformations pictured. 
+                Next, we have my self-chosen hybrid images :3 The first one is a goofy one, a hybrid between a 
+                baby seal, and a chihuahua with an Edna-Mode-esc bob haircut. The second one is a cute one, between 
+                a corgi, and a puppy in a peanut costume. 
+            </p>
+            <!--part 2.2 images-->
+            <div><img src="/images/project2/part2_2_dereknutmeghybrid.png" style="width:850px"></div>
+            <div><img src="/images/project2/part2_2_fourierseries.png" style="width:850px"></div>
+            <div><img src="/images/project2/part2_2_sealbobhybrid.png" style="width:850px"></div>
+            <div><img src="/images/project2/part2_2_corgipeanuthybrid.png" style="width:850px"></div>
+            <p><b>Part 2.3: Gaussian and Laplacian Stacks & Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</b></p>
+            <!--oraple images-->
+            <div><img src="/images/project2/part23_gaussapple.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_lapapple.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_gaussorange.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_laporange.png" style="width:850px"></div>
+
+            <div><img src="/images/project2/part23_gaussapplemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_lapapplemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_gaussorangemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_laporangemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part23_orapleblend.png" style="width:850px"></div>
+
+            <!--wolf nose blend-->
+            <div><img src="/images/project2/part24_gausswolf.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_lapwolf.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_gaussnose.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_lapnose.png" style="width:850px"></div>
+
+            <div><img src="/images/project2/part24_gausswolfmask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_lapwolfmask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_gaussnosemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_lapnosemask.png" style="width:850px"></div>
+            <div><img src="/images/project2/part24_oroseblend.png" style="width:850px"></div>
+
+        </div>
+        <div class="grid6"></div>
+    </div>
+</body>
+</html>
