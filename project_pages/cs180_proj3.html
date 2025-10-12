@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180 Project 3</title>
+    <link rel="stylesheet" href="projtype1.css" link>
+    <link rel="icon" href="/images/layout.png">
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid1">
+            <a href="/projects.html">
+                <p><<< Back to
+                    <br/>Projects Page
+                </p>
+            </a>
+        </div>
+        <div class="grid2">
+            CS 180 Project 3
+        </div>
+        <div class="grid3">
+            <p>[Auto]Stitching Photo Mosaics
+            </p>
+        </div>
+        <div class="grid4">
+            
+        </div>
+        <div class="grid5">
+            <p><b>Part A.1: Shoot the Pictures</b></p>
+            <p>Below I have provided the 2 pairs of images that I will be warping and mosaicing during part A of this project. 
+                The first set of images is a photo of my friends couch, taken at different angles. My center of projection were the 
+                plushies in the corner of the couch. The second set of images is my street at night, also from different angles. My 
+                COP for this set was the tree trunk in the foreground. 
+            </p>
+            <div><img src="/images/project_3/digitized_pics.jpg" style="width:700px"></div>
+
+
+            <p><b>Part A.2: Recover Homographies</b></p>
+            <p>
+                This part of the project asks to compute the H matrix for the image sets' homography transfromation. Doing so required
+                me to compile a list of corresponding points across my image pairs (aka. what pixels in image2 show the same photo object
+                in these pixels in image1?), which I did so using the tool made by a prior student (shoutout to them!). 
+            </p>
+            <p>
+                Below, I have pictured my image sets with their corresponding points visualized using red X marks. Besides them, I have their
+                computed H matrices visualized and displayed. 
+            </p>
+            <div>
+                <img src="/images/project_3/couch1_corres.jpg" style="width:700px">
+                <img src="/images/project_3/couch2_corres.jpg" style="width:700px">
+                <img src="/images/project_3/hmatrix_couch.jpg" style="width:700px">
+            </div>
+            <div>
+                <img src="/images/project_3/street1_corres.jpg" style="width:700px">
+                <img src="/images/project_3/street2_corres.jpg" style="width:700px">
+                <img src="/images/project_3/hmatrix_street.jpg" style="width:700px">
+            </div>
+
+            <p><b>Part A.3: Warp the Images</b></p>
+            <p>
+                This project part called for me to apply inverse warping to my images through 2 different
+                interpolation methods: Nearest-Neighbor, and Bilinearly.
+            </p>
+            <p>
+                Nearest-Neighbor interpolation involved filling in our warped pixels by rounding our coordinate
+                to the nearest pixel value. Using this sort of interpolation was fast, (in comparison to bilinear interpolation)
+                however, if you examine the warped images below, the warped results are more 'jagged'. 
+                Take the 'NN-Warped Couch Pt.2' as an example, you can see how the plushies have a more low-resolution appearance, and 
+                the shape of them is a bit more dramatic than in the bilinear example we'll see later on. 
+            </p>
+            <div><img src="/images/project_3/nncouch.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/nnstreet.jpg" style="width:700px"></div>
+            <p>
+                Bilinear interpolation involves using the weighted average 4 nearby pixels to fill in our warped pixels. 
+                I took the average of the 4 corner pixels for my bilinear implementation. This function ran a bit slower than the 
+                NN interpolation, however the results were a more smooth appearance to the warped images. Intuitively, it makes sense 
+                that this implementation would result in a longer runtime and smoother appearance, since the averaging would increase the runtime, but 
+                result in more sophisticated pixel values than simply rounding. 
+            </p>
+            <div><img src="/images/project_3/bicouch.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/bistreet.jpg" style="width:700px"></div>
+
+            <p>
+                I also had to rectify my photos, which means to transform a rectangular region of my original photo, one which isn't perfectly rectangular
+                due to skewing/angles, and use homography to make the photo properly rectangular.
+            </p>
+            <p>
+                For my couch photos, I chose to rectify the rectangular couch cushions. They're a bit hidden by pillows in the photo, but the red Xs in
+                the image below shows the 4 corners of the cushion. 
+            </p>
+            <div><img src="/images/project_3/rect_couch.jpg" style="width:700px"></div>
+            <p>
+                For my first street photo, I rectified a small, rectangular window near the top of my photo. I rectified the car door
+                in my second street photo. 
+            </p>
+            <div><img src="/images/project_3/rect_street.jpg" style="width:700px"></div>
+
+
+            <p><b>Part A.4: Blend the Images into a Mosaic</b></p>
+            <p>
+                Finally, it is time to blend our image sets together so that they form cohesive mosaics!
+                My mosaic-ing function took both images, and their H matrix as inputs, and went about blending through these steps: 
+                <ol>
+                    <li>Project the corners of image2 onto the corners of image1 in order to translate the bounds of image2 to image1's frame</li>
+                    <li>
+                        Obtain the minimum and maximum X and Y coordinate values amongst the corners of image1, and projected image2.
+                    </li>
+                    <li>
+                        Use the differences between the maximum and minimum values to obtain the final mosaic's dimensions. Create our mosaic image, and weight matrix using the dimensions. Fill the matrices with zeroes for now. 
+                    </li>
+                    <li>
+                        Copy image1 into our mosaic image, while factoring in the offset created by the mosaic origin. We
+                        can just copy image1 directly because we will be warping image2 to fit image1. As image1 pixels are being copied
+                        to the mosaic, also add +1 to the corresponding pixel in our weight matrix.
+                    </li>
+                    <li>
+                        Warp image2 (I used my bilinear interpolaton function to do this). When warping, 
+                        instead of using the prior H matrix, we multiplied the H matrix by an offset matrix so that the coordinates of 
+                        the warped image2 won't be in any negative quadrants. 
+                    </li>
+                    <li>
+                        Add our warped image2 pixels to the mosaic matrix, and increment the corresponding weight pixels. 
+                    </li>
+                    <li>
+                        Normalize our mosaic by dividing the RGB values of our non-zero pixels by the corresponding
+                        weight value in the weight matrix. The weight value indicates how many images are been layered at the 
+                        corresponding pixel. This will prevent our overlapping regions from being too bright. 
+                    </li>
+                </ol>
+
+            </p>
+            <p>
+                Here are the mosaic results!
+            </p>
+            <div><img src="/images/project_3/couch_mosaic.jpg" style="width:850px"></div>
+            <div><img src="/images/project_3/street_mosaic.jpg" style="width:850px"></div>
+
+
+        </div>
+        <div class="grid6"></div>
+    </div>
+</body>
+</html>
