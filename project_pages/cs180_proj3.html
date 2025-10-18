@@ -136,7 +136,44 @@
             <div><img src="/images/project_3/couch_mosaic.jpg" style="width:850px"></div>
             <div><img src="/images/project_3/street_mosaic.jpg" style="width:850px"></div>
 
+            <p><b>Part B.1: Harris Corner Detection</b></p>
+            <p>Below are 2 sets of images. The first set are my image-pairs with there harris points plotted. 
+                Each image has a range from 797-1030 points, even after modifying the get_harris_corners function, such that the 
+                minimum distance between points was increased from 1 pixel to 3 pixels. The second set are my image-pairs after going through
+                Adaptive Non-Maximal Suppression, which extracted 500 points from each image.
+            </p>
+            <div><img src="/images/project_3/harrispts.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/anms.jpg" style="width:700px"></div>            
+            
+            <p><b>Part B.2: Feature Descriptor Extraction</b></p>
+            <p>Below I have displayed the extracted 8x8 feature descriptors for each of my images. 
+                I preformed feature descriptor extraction on all 500 of the ANMS interest points for each image, however for
+                space sake (and so that my kernel didn't crash from displaying 2000 8x8 images), I'm only displaying 32 descriptor 
+                patches for each image.
+            </p>
+            <div><img src="/images/project_3/featdesc_0.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/featdesc_1.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/featdesc_2.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/featdesc_3.jpg" style="width:700px"></div>
 
+            <p><b>Part B.3: Feature Matching</b></p>
+            <p>Below are my image-pairs. Each pair has undergone feature matching, and the red lines between
+                each pair of blue dots indicates where a feature from image1 was identified as matching a feature form image2.
+            </p>
+            <div><img src="/images/project_3/couchfeatmatch.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/streetfeatmatch.jpg" style="width:700px"></div>
+
+            <p><b>Part B.4: RANSAC for Robust Homography</b></p>
+            <p>Below are the side-by-side comparisons between my automatic mosaics, whose H matrix was 
+                created with the help of a Random Sample Consensus (RANSAC) homography function, and my manual mosaic from 
+                Part A.4 of this project. I didn't see too much of an observable difference between my street mosaics, which 
+                may be due to the fact that my street images share a lot of unique features and objects (ie. cars, leaves, fences, windows, etc.). 
+                Thus both the manual and automatic methods of matching similar features output a lot of good coordinates. However, my couch images
+                have a more plain composition, with the gray topography of my friend's couch having less unique features to identify and correspond. 
+                You can see that the couch corner is more aligned in my automatic, RANSAC, mosaic in comparison to my manual mosaic. 
+            </p>
+            <div><img src="/images/project_3/couchransac.jpg" style="width:700px"></div>
+            <div><img src="/images/project_3/streetransac.jpg" style="width:700px"></div>
         </div>
         <div class="grid6"></div>
     </div>
