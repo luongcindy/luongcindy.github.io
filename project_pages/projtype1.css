@@ -1,57 +1,34 @@
 @import url(https://fonts.googleapis.com/css2?family=Michroma&display=swap);
 
-/* ========================= */
-/* Prevent content cut-off when printing */
-/* ========================= */
 @media print {
-
-  /* Let the printed page grow instead of clipping */
-  html, body {
-    height: auto !important;
-    overflow: visible !important;
-    margin: 0;
-    padding: 0;
+  .grid-container {
+    display: block;              /* stack items */
   }
 
-  /* Remove any fixed or full-screen heights */
-  * {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
+  .grid2 {                       /* title */
+    font-size: 48px;
+    text-align: left;
+    margin-right: 0;
   }
 
-  /* Make sure elements don’t get chopped mid-way */
-  img, video, canvas, figure, .plot, .image-container {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-  /* Let main text expand when printing */
-  .grid5 {
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: normal !important;
-  }
-  /* Optional: hide sticky/scroll UI */
-  .sidebar, .floating-button, .scroll-bar {
-    display: none !important;
+  .grid3 {                       /* subtitle */
+    font-size: 24px;
+    margin-top: 0;
+    margin-right: 0;
   }
 
-  /* Prevent weird flexbox/grid clipping */
-  .container, .section, .row, .column {
-    display: block !important;
-    height: auto !important;
+  .grid4, .grid5 {
+    margin-top: 16px;
+    margin-left: 0;
   }
 
-  /* Avoid page cuts inside blocks */
-  section, div, article {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
+  .grid6 {
+    display: none;               /* if it’s just empty spacing */
   }
 
-  /* Reset page margins */
-  @page {
-    size: auto;
-    margin: 0;
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -119,6 +96,7 @@ body{
 img {
     border: 1px solid black;
 }
+
 
 
 
