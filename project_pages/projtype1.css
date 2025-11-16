@@ -1,21 +1,55 @@
 @import url(https://fonts.googleapis.com/css2?family=Michroma&display=swap);
 
+/* ========================= */
+/* Prevent content cut-off when printing */
+/* ========================= */
 @media print {
-  body {
+
+  /* Let the printed page grow instead of clipping */
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
     margin: 0;
     padding: 0;
-    overflow: visible !important;
   }
+
+  /* Remove any fixed or full-screen heights */
   * {
+    max-height: none !important;
+    height: auto !important;
     overflow: visible !important;
-    position: static !important;
   }
+
+  /* Make sure elements don’t get chopped mid-way */
+  img, video, canvas, figure, .plot, .image-container {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Optional: hide sticky/scroll UI */
+  .sidebar, .floating-button, .scroll-bar {
+    display: none !important;
+  }
+
+  /* Prevent weird flexbox/grid clipping */
+  .container, .section, .row, .column {
+    display: block !important;
+    height: auto !important;
+  }
+
+  /* Avoid page cuts inside blocks */
   section, div, article {
-    page-break-inside: avoid;
-    break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
+
+  /* Reset page margins */
+  @page {
+    size: auto;
+    margin: 0;
   }
 }
+
 body{
     background-color: whitesmoke;
 }
@@ -80,5 +114,6 @@ body{
 img {
     border: 1px solid black;
 }
+
 
 
