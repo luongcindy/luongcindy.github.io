@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css2?family=Michroma&display=swap);
-
+@media print {
+  body {
+    background-color: whitesmoke;
+  }
+}
 body{
     background-color: whitesmoke;
 }
@@ -64,3 +68,4 @@ body{
 img {
     border: 1px solid black;
 }
+
