@@ -25,7 +25,12 @@
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
-
+  /* Let main text expand when printing */
+  .grid5 {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+  }
   /* Optional: hide sticky/scroll UI */
   .sidebar, .floating-button, .scroll-bar {
     display: none !important;
@@ -114,6 +119,7 @@ body{
 img {
     border: 1px solid black;
 }
+
 
 
 
