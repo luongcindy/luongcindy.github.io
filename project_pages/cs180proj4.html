@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 180 Project 4</title>
+    <link rel="stylesheet" href="projtype1.css" link>
+    <link rel="icon" href="/images/layout.png">
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid1">
+            <a href="/projects.html">
+                <p><<< Back to
+                    <br/>Projects Page
+                </p>
+            </a>
+        </div>
+        <div class="grid2">
+            CS 180 Project 4
+        </div>
+        <div class="grid3">
+            <p>Neural Radiance Field!
+            </p>
+        </div>
+        <div class="grid4">
+            
+        </div>
+        <div class="grid5">
+            <p><b>Part 0: Calibrating Your Camera and Capturing a 3D Scan</b></p>
+            <p>Below I have provided the 2 screenshots of the camera frustums visualization of my instant ramen in Viser.
+            </p>
+            <div><img src="/images/project4/ramencloud1.png" style="width:700px"></div>
+            <div><img src="/images/project4/ramencloud3.png" style="width:700px"></div>
+
+
+            <p><b>Part 1: Fit a Neural Field to a 2D Image</b></p>
+            <p>
+                My MLP was implemented with a class, and a forwarding function. 
+                The MLP is initialized with attributes where width/hidden_dim = 256; a learning rate of 1e-4 as given 
+                in the project spec; a max frequency level = 10; and 4 connected layers. I sequentially pass 
+                the positional encoding value through the linear layers, and non-linear activations (ReLU), and I end 
+                it off with a Sigmoid operation. 
+            </p>
+            <p> 
+                For my forwarding function, I run the 2D pixel coordinates through my positional encoding function to give them more 
+                dimension. I then run these coordinates through the model, and return the predicted RGB pixels. 
+            </p>
+            <p>
+                Below I have my 2D training progression visualizations picutured:
+            </p>
+            <p>This is my fox training under normal max positional encoding and width values. 
+                Below the progression pictures, is the PSNR curve for the training session. 
+            </p>
+            <div>
+                <img src="/images/project4/fox_iter_2k.jpg" style="width:700px">
+                <img src="/images/project4/fox1_5k_psnr.jpg" style="width:700px">
+            </div>
+            <p>These photos represent my fox training under lower max positional encoding frequencies. 
+                The first had L = 5, and the second had L = 1. As you can see, the lower the L value, the more blurry and smoothed over 
+                the fox's features became. 
+            </p>
+            <div>
+                <img src="/images/project4/fox_lowfreq1.jpg" style="width:700px">
+                <img src="/images/project4/fox_lowfreq2.jpg" style="width:700px">
+            </div>
+            <p>These photos are the fox image being trained with lower width values (hidden_dim). The first
+                one's hidden_dim = 128, and the second one's hidden_dim = 64. You can kind of see how the eyes had less definition during training as the 
+                width went down. 
+            </p>
+            <div>
+                <img src="/images/project4/fox_lowwidth1.jpg" style="width:700px">
+                <img src="/images/project4/fox_lowwidth2.jpg" style="width:700px">
+            </div>
+            <p>Finally, the training progression visualization on one of my own images. This image shows
+                the character Hachiware bestowing his friend Chiikawa his level 5 weed certification (In the show they're job
+                is to pick weeds out of the ground). The progression is pretty subtle for the last 3 images, but on closer examination, you can see
+                how the image sharpens as the training progresses. 
+            </p>
+            <div>
+                <img src="/images/project4/chiikawa_iter_1_5k.jpg" style="width:700px">
+            </div>
+
+            <p><b>Part 2: Fit a Neural Radiance Field from Multi-view Images</b></p>
+
+            <p>Part 2.1: Create Rays from Cameras</p>
+            <p>For this part of the project, I implemented 3 functions, who's overall goal
+                was to be able to create a ray for each pixel. Ray's are a vector/straight line that extends between our
+                virtual camera's position, to the 3d scene it's photographing. Referencing our camera cloud from part 0, 
+                each image in the cloud is our 'virual camera'; in the center of the cloud is our 3d object; and rays would be straight
+                lines connecting each pixel our camera's capture to what part of the 3d scene our pixel is showing.
+            </p>
+            <p>The functions were: transform(), pixel_to_camera(), and pixel_to_ray()</p>
+            <p>Implementing them was pretty straightforward. I just used some numpy linear algebra operations for each of them. The
+                transform(), and pixel_to_camera() functions were helpers used to make pixel_to_ray(). 
+            </p>
+            <p>Part 2.2: Sampling & Part 2.3: Putting the Dataloading All Together</p>
+            <p>
+                I've combined both of these parts into 1 paragraph section because I ended up putting the sampling-rays-from-images function
+                from 2.2 into the dataloading class in part 2.3. This descision was made because the dataloader written in the viser code in the spec
+                calls a sample_rays() function that presumably does the same job as the 2.2 sampling-rays-from-images function. I didn't want to change
+                the viser code too much. 
+            </p>
+            <p>
+                Let's start describing the implementation with the dataloader, 
+                which converts randomly sampled pixels from multiview images into rays. 
+                The dataloader was implemented using a RaysData class that stores: list of the images; K, the intrinsic
+                matrix; the c2w matricies for each image; a list of flattened pixels across all the images; the 
+                height/width of the images; the total pixel count; the coordinates of each pixel in the images list; and the coordinate rays and 
+                directional rays for each pixel. 
+            </p>
+            <p>
+                When the the dataloader is initalized, the pixel coordinates and rays are automatically
+                initialized. The rays are calculated using the pixel_to_ray() function from part 2.1. 
+            </p>
+            <p>
+                The sampling-rays-from-images function detailed in part 2.2 is the sample_random_rays() function, apart of the 
+                RaysData class. This function is simple, randomly indexing the pre-computed rays in the class object. 
+                Originally, this function wasn't going to be apart of the class, and would compute rays on the fly. However,
+                because the viser code had rays_o and rays_d
+                as RaysData class attributes, meaning that I would need to pre-compute all the rays anyways, there
+                was no point to make the sampling rays function external. 
+            </p>
+            <p>The 2.2 function for sampling random ray points, my sample_points_along_rays() function, 
+                is outside of the RaysData class. It takes each ray and turns it into a set of 3D sample points. 
+                It does this by choosing evenly spaced depth values between a near 
+                and far range, then optionally adding a bit of random noise so the samples aren’t always in the exact
+                same spots.
+            </p>
+            <p>Part 2.4: Neural Radiance Field</p>
+            <p>I implemented my NeRF model using a class, and forwarding function. I broke down the network's structure
+                into the following: The first chain of linear operations before the coordinate 
+                positional encoding is concatenated; The second chain of linear operations after coord PE 
+                concatination; a density branch (that returns the pixel density values); and a color branch 
+                (that returns pixel RGB values) that gets concatenated half way through.
+                I defined each of the output of each linear operations for each section of the network structure in the model's initialization. 
+                Then in my forwarding function, I connect all of these linear operations in 1 chain.
+            </p>
+
+            <p>Part 2.5: Volume Rendering</p>
+            <p>This part of the project was straightforward to implement. I implemented it using
+                some torch functions to recreate the discrete-approximation form of the 
+                the core volume rendering equation. 
+            </p>
+            <p>
+                The visualizations and other training metrics for the lego images are below!
+            </p>
+            <p>Below is the visualized training process my NeRF model upon the lego excavator images.
+                The right images are the volume rendered, RGB pixels predicted by the model at the titled
+                iteration. The left hand sides visualizes 100 of the rays and samples used at that training set. 
+                (The rays are the same at every iteration shown because I used the same c2w for visualization)
+            </p>
+            <div>
+                <img src="/images/project4/lego_0.jpg" style="width:700px">
+                <img src="/images/project4/lego_500.jpg" style="width:700px">
+                <img src="/images/project4/lego_1000.jpg" style="width:700px">
+                <img src="/images/project4/lego_1500.jpg" style="width:700px">
+            </div>
+            <p>
+                This is the spherical rendering video of the lego excavator. 
+            </p>
+            <div>
+                 <video width="320" height="240" autoplay>
+                    <source src="lego_spherical.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p>
+                This is the PSNR curve on the validation set. 
+            </p>
+            <div>
+                <img src="/images/project4/lego_valid_psnr.jpg" style="width:700px">
+            </div>
+
+            <p><b>Part 2.6: Training with Your Own Data</b></p>
+            <p>My data was 44 pictures of my tonkotsu ramen bowl.</p>
+            <p>Hyperparameter Changes:</p>
+            <dl>
+                <dt>near value: 2.0 to 0.02</dt>
+                <dt>far value: 6.0 to 0.5</dt>
+                <dt>number of iterations: 1,500 to 10,000</dt>
+                <dd>I didn't have as many pictures, nor as pictures of as-good quality
+                    as the lego excavator ones. I had to run more iterations to train the model on 
+                    the worser data. 
+                </dd>
+                <dt>batch_size (number of rays randomly sampled): 10,000 to 1,000</dt>
+                <dd>When I tried keeping the larger batch size, CoLab started freaking out 
+                    about GPU usage. 
+                </dd>
+            </dl>
+            <p>
+                Other Changes:
+            </p>
+            <dl>
+                <dt>
+                    Added cell to resize ramen images to 200x200x3 size.
+                </dt>
+                <dt>
+                    Didn't use undistortion function. 
+                </dt>
+                <dt>
+                   Created a new training loop function that was near identical to the one used on the lego
+                   dataset. The new one records loss values.   
+                </dt>
+            </dl>
+            <p>GIF of Ramen Bowl:</p>
+            <div><img src="/images/project4/ramen_fig.gif" style="width:700px"></div>
+            <p>Ramen Training Loss Plot:</p>
+            <div><img src="/images/project4/ramen_loss.jpg" style="width:700px"></div>
+            <p>Ramen PSNR Training & Validation Plot:</p>
+            <div>
+                <img src="/images/project4/ramen_psnr.jpg" style="width:300px">
+                <img src="/images/project4/ramen_valid_psnr.jpg" style="width:300px">
+            </div>
+            <p>Intermediate Ramen Training Renders:</p>
+            <div>
+                <img src="/images/project4/ramen_0.jpg" style="width:700px">
+                <img src="/images/project4/ramen_1000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_2000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_3000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_4000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_5000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_6000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_7000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_8000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_9000.jpg" style="width:700px">
+                <img src="/images/project4/ramen_10000.jpg" style="width:700px">
+            </div>
+        </div>
+        <div class="grid6"></div>
+    </div>
+</body>
+</html>
