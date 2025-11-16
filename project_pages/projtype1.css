@@ -1,7 +1,19 @@
 @import url(https://fonts.googleapis.com/css2?family=Michroma&display=swap);
+
 @media print {
   body {
-    background-color: whitesmoke;
+    margin: 0;
+    padding: 0;
+    overflow: visible !important;
+  }
+  * {
+    overflow: visible !important;
+    position: static !important;
+  }
+  section, div, article {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
   }
 }
 body{
@@ -68,4 +80,5 @@ body{
 img {
     border: 1px solid black;
 }
+
 
