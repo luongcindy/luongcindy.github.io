@@ -181,6 +181,158 @@
                 <img src="/images/project5/hybrid24.jpg" style="width:350px">
                 <img src="/images/project5/hybrid24_bw.jpg" style="width:350px">
             </div>
+            <p><b>Part 1.1B Training a Single-Step Denoising UNet - Implementing the UNet</b></p>
+            <p>
+                The goal of part B of this project was to build and train 
+                a flow matching model on photos of MNIST digits (handwritten, greyscale images of numbers 0-9 that are a 
+                standard ML training/testing benchmark dataset). In short, the goal of our model
+                is to take noisy images of digits, and decipher them into clean images of digits. 
+            </p>
+            <p>
+                The first section of part B involved building a baseline, one-step denoiser, UNet. 
+                This UNet is made up of a multiple of blocks, with each block involving its own series of 
+                torch operations. I built these block operators 
+                [Conv, DownConv, UpConv, Flatten, Unflatten] first, then used said blocks in the creation of the model. 
+                Building the model wasn't dissimilar to what it was like building the NeRF model from the Project 4. However
+                there were extra degrees of complexity due to the blocks. I had to build the model with blocks that call torch
+                operations, rather than using torch operations directly. 
+            </p>
+            <p><b>Part 1.2B Using the UNet to Train a Denoiser</b></p>
+            <p>
+                The baseline UNet denoises by mapping a noisy image to a clean image, thus it needs to be trained
+                on clean-noisy image pairs. In this part, I created the noisy images for the pairings with different
+                noise levels. Below is a series of digits that have undergone the noising process under noise levels = 
+                [0.0, 0.1, 0.4, 0.5, 0.6, 0.8, 1.0].
+            </p>
+            <div>
+                <img src="/images/project5/part12.jpg" style="width:700px">
+            </div>
+            <p><b>Part 1.2.1B Training</b></p>
+            <p>
+                In this part, I trained my model on image pairs with the noise level = 0.5. 
+                The training occured over 5 epochs. Below I have the training loss curve plot
+                of the training process, and sample results of the denoised test set after the 1st 
+                and 5th epoch. 
+            </p>
+            <div>
+                <img src="/images/project5/part121_training.jpg" style="width:700px">
+            </div>
+            <div>
+                <figure>
+                    <img src="/images/project5/part121_compare1.jpg" style="width:700px">
+                    <figcaption>Test Set's Sample Results - Epoch 1</figcaption>
+                </figure>
+                <figure>
+                    <img src="/images/project5/part121_compare5.jpg" style="width:700px">
+                    <figcaption>Test Set's Sample Results - Epoch 5</figcaption>
+                </figure>
+            </div>
+            <p><b>Part 1.2.2B Out-of-Distribution Testing</b></p>
+            <p>
+                For this part, I had to investigate the denoiser's preformance on images with noise levels 
+                besides the one it was trained on, 0.5. 
+                Below I display my sample results on the test set with noise levels = [0.0, 0.1, 0.4, 0.5, 0.6, 0.8, 1.0].
+            </p>
+            <div>
+                <img src="/images/project5/part122_ood1.jpg" style="width:700px">
+                <img src="/images/project5/part122_ood2.jpg" style="width:700px">
+            </div>
+            <p><b>Part 1.2.3B Denoising Pure Noise</b></p>
+            <p>
+                For this part, rather than train a model to denoise noisy-digit images, I'm training 
+                a model to denoise pure noise. Below, I have displayed the training loss curve plot, and the 
+                sample results for epoch 1 and 5.  
+            </p>
+            <p>
+                Within my generated sample results, all of the model's outputs looks the same across the first and last epoch.
+                The output looks like a combination of blurred MNIST digits. My explanation as to why this occurs has to do with 
+                how the model predicts points that minimize the sum of squared distances (aka the amount of difference) from all training examples. 
+                Because the model is given pure noise, the minimized sum is the mean of all the digit images in the training set. 
+            </p>
+            <div>
+                <img src="/images/project5/part123_training.jpg" style="width:700px">
+            </div>
+            <div>
+                <figure>
+                    <img src="/images/project5/part123_compare1.jpg" style="width:700px">
+                    <figcaption>Pure Noise Sample Results - Epoch 1</figcaption>
+                </figure>
+                <figure>
+                    <img src="/images/project5/part123_compare1.jpg" style="width:700px">
+                    <figcaption>Pure Noise Sample Results - Epoch 5</figcaption>
+                </figure>
+            </div>
+            <p><b>Part 2.1B Adding Time Conditioning to UNet</b></p>
+            <p>
+                The one-step denoising UNet we've been working with has proved itself to 
+                not be the best at image generation. In this part I implemented an iterative denoiser
+                that will predict the 'flow' between our noisy and clean data to generate a more
+                refined output. Doing this part involved injecting a scalar 't' into our UNet using a newly-implemented
+                block, a Fully-Connected Block. 
+            </p>
+            <p><b>Part 2.2B Training the UNet</b></p>
+            <p>
+                For this part I trained my new TimeConditionedUNet. The UNet itself was contained within a predefined
+                wrapper class TimeConditionedFM, so training it involved me having to implement a forwarding function for this 
+                wrapper class. 
+                Below I have the 
+                training loss curve plot for the UNet displayed. 
+            </p>
+            <div>
+                <img src="/images/project5/part22_training.jpg" style="width:700px">
+            </div>
+            <p><b>Part 2.3B Sampling from the UNet</b></p>
+            <p>
+                For this part I implemented a sampling function so that I can 
+                see the training progress as the epochs continued. I then incorporated
+                this sampling function into my training loop. Below I have the sampling results of 
+                my time-conditioned UNet after epoch 1,5, and 10. 
+            </p>
+            <div>
+                <img src="/images/project5/part23_sample15.jpg" style="width:700px">
+                <img src="/images/project5/part23_sampling10.jpg" style="width:700px">
+            </div>
+
+            <p><b>Part 2.4B Adding Class-Conditioning to UNet</b></p>
+            <p>
+                In this part, I made my outputs more refied by incorporating a Class-Conditioning
+                vector 'c' into the UNet. Similar to part 2.1B, this involved adding 2 Fully-Connected Blocks. 
+            </p>
+            <p><b>Part 2.5B Training the UNet</b></p>
+            <p>
+                For this part I trained my new ClassConditionedUNet. 
+                
+                Implementing this part was extremely similar to training the TimeConditionedUNet. 
+                The ClassConditionedUNet was also encased within a wrapper class, for which I implemented a new forwarding 
+                function based on the spec-given algorithm. 
+                Below I have the 
+                training loss curve plot for the UNet displayed. 
+            </p>
+            <div>
+                <img src="/images/project5/part25_training.jpg" style="width:700px">
+            </div>
+            <p><b>Part 2.6B Sampling from the UNet</b></p>
+            <p>
+                For this part I implemented a new sampling function, specific to the 
+                ClassConditionedUNet. Below I have the sampling results of 
+                my time-conditioned UNet after epoch 1,5, and 10. By epoch 10, we got some 
+                very clean looking digits. 
+            </p>
+            <div>
+                <img src="/images/project5/part26_sample15.jpg" style="width:700px">
+                <img src="/images/project5/part26_sampling10.jpg" style="width:700px">
+            </div>
+            <p>
+                This project part also had me test the class-conditioned model's preformance after removing the exponential
+                learning rate scheduler. After taking the scheduler out, I didn't have to do anything to 
+                compensate for its loss. Below I have my training loss plot, and samples displayed. Comparing them to 
+                the plot and samples from part 2.5 and 2.6, they actually look quite good :D
+            </p>
+            <div>
+                <img src="/images/project5/part27_training.jpg" style="width:700px">
+                <img src="/images/project5/part27_sample15.jpg" style="width:700px">
+                <img src="/images/project5/part27_sampling10.jpg" style="width:700px">
+            </div>
         </div>
         <div class="grid6"></div>
     </div>
